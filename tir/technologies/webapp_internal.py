@@ -5383,7 +5383,8 @@ class WebappInternal(Base):
                                     if last_item:
                                         element_click().click()
                                         if self.check_toggler(label_filtered):
-                                            success = self.clicktree_status_selected(label_filtered, check_expanded=True)
+                                            if not self.parameters:
+                                                success = self.clicktree_status_selected(label_filtered, check_expanded=True)
                                             if success and right_click:
                                                 self.click(element_click(), right_click=right_click)
                                         else:
@@ -5392,7 +5393,8 @@ class WebappInternal(Base):
                                             success = self.clicktree_status_selected(label_filtered)
                                     else:
                                         element_click().click()
-                                        success = self.clicktree_status_selected(label_filtered, check_expanded=True)
+                                        if not self.parameters:
+                                            success = self.clicktree_status_selected(label_filtered, check_expanded=True)
                                     
                                     try_counter += 1
                                 except:
@@ -5402,8 +5404,10 @@ class WebappInternal(Base):
                             try:
                                 element_click = lambda: self.soup_to_selenium(element_class_item.parent)
                                 element_click().click()
-                                success = self.clicktree_status_selected(label_filtered) if last_item and not self.check_toggler(label_filtered) else self.clicktree_status_selected(label_filtered, check_expanded=True)
-
+                                if not self.parameters:
+                                    success = self.clicktree_status_selected(label_filtered) if last_item and not self.check_toggler(label_filtered) else self.clicktree_status_selected(label_filtered, check_expanded=True)
+                                else:
+                                    success = True
                             except:
                                 pass
             
